@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rahaf Abdelaziz | Portfolio</title>
+  <meta name="description" content="Portfolio of Rahaf Abdelaziz - CS, Decision Support, Operations Research, ML, simulation, and web projects." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="#top">RA</a>
+    <button class="nav-toggle" type="button">Menu</button>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero reveal">
+      <div class="hero-copy">
+        <p class="eyebrow">LEARNING LOUDLY, IMPLEMENTING BOLD IDEAS</p>
+        <h1>Rahaf<br>Abdelaziz</h1>
+        <p class="lead">Computer Science student combining machine learning, decision support, operations research, and visual creativity into projects that feel useful, personal, and original.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#projects">Explore Projects</a>
+          <a class="btn" href="https://github.com/rahafabdulaziz0" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/rahaf-abdulaziz-jafar-0139862ab/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <blockquote class="lyric-quote">
+          <p>“Create, explore, expand, conquer.”</p>
+          <cite>- A$AP Rocky</cite>
+        </blockquote>
+      </div>
+      <div class="hero-visuals">
+        <figure class="hero-image main"><img src="assets/images/hero_main.png" alt="Rahaf sitting outdoors wearing a white scarf"></figure>
+        <figure class="hero-image second"><img src="assets/images/hero_secondary.png" alt="Rahaf holding flowers"></figure>
+      </div>
+    </section>
+
+    <section id="about" class="section reveal">
+      <div class="section-heading">
+        <p class="eyebrow">About</p>
+        <h2>Creative mind, structured thinking.</h2>
+      </div>
+      <div class="about-grid">
+        <article class="about-card">
+          <p>I’m Rahaf Abdelaziz, a Computer Science student at Cairo University, specialising in Decision Support and Operations Research. I’m interested in machine learning, data, and building practical projects that connect technical ideas with real life.</p>
+          <p>I’m also a creative person - I paint, sketch, and care about visual style - but I’m equally passionate about math, statistics, and machine learning. For me, this is the best of both worlds: creativity and logic. My main focus right now is combining both passions into projects that feel useful, personal, and original.</p>
+        </article>
+        <article class="about-photo">
+          <img src="assets/images/hero_secondary.png" alt="Rahaf holding flowers">
+          <img class="lily-corner" src="assets/images/lily_single.png" alt="Pink lily decoration">
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="section reveal">
+      <div class="section-heading">
+        <p class="eyebrow">Projects</p>
+        <h2>Selected work and files</h2>
+      </div>
+      <p class="section-note">Each project includes preview, code, and file links where available, so visitors can inspect the work without downloading everything first.</p>
+
+      <div class="projects-grid">
+        <article class="project-card featured">
+          <div class="project-topline"><span>Team web project</span><span>Django</span></div>
+          <img class="project-image" src="assets/images/recipe_preview.jpg" alt="Recipe Finder preview">
+          <h3>Recipe Finder Web Project</h3>
+          <p>A team web project for discovering, searching, saving, and managing recipes. My part was building the login and sign-up flow on both the frontend and backend using HTML, CSS, JavaScript, and Django.</p>
+          <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Django</span><span>Teamwork</span></div>
+          <div class="project-actions">
+            <a class="btn small" href="assets/projects/recipe_finder_preview/index.html" target="_blank">Open website preview</a>
+            <a class="btn small" href="https://github.com/Asmaa6777/WEB" target="_blank" rel="noopener">GitHub repo</a>
+            <a class="btn small" href="assets/projects/recipe_finder_web_project.zip" download>Download source ZIP</a>
+            <button class="btn small toggle-btn" data-target="recipe-code">View login/sign-up code</button>
+          </div>
+          <div class="file-list">
+            <a href="assets/projects/recipe_finder_code/accounts_views.py.txt" target="_blank">Open backend views.py</a>
+            <a href="assets/projects/recipe_finder_code/login_template.html.txt" target="_blank">Open login template</a>
+            <a href="assets/projects/recipe_finder_code/signup_template.html.txt" target="_blank">Open sign-up template</a>
+            <a href="assets/projects/recipe_finder_code/recipe_readme.md.txt" target="_blank">Open README</a>
+          </div>
+          <div id="recipe-code" class="expand-box hidden"><h4>Backend login/sign-up logic</h4><pre>from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+from accounts.models import CustomUser
+
+
+def signup_view(request):
+    if request.user.is_authenticated:
+        return redirect(&#x27;homepage&#x27;)
+
+    if request.method == &quot;POST&quot;:
+        username = request.POST.get(&quot;username&quot;, &quot;&quot;).strip()
+        email = request.POST.get(&quot;email&quot;, &quot;&quot;).strip()
+        password = request.POST.get(&quot;password&quot;, &quot;&quot;)
+        confirm_password = request.POST.get(&quot;confirmPassword&quot;, &quot;&quot;)
+        first_name = request.POST.get(&quot;firstName&quot;, &quot;&quot;).strip()
+        last_name = request.POST.get(&quot;lastName&quot;, &quot;&quot;).strip()
+
+        if password != confirm_password:
+            return render(request, &quot;accounts/signup.html&quot;, {&quot;error&quot;: &quot;Passwords do not match&quot;})
+
+        if CustomUser.objects.filter(username=username).exists():
+            return render(request, &quot;accounts/signup.html&quot;, {&quot;error&quot;: &quot;Username already taken&quot;})
+
+        if CustomUser.objects.filter(email=email).exists():
+            return render(request, &quot;accounts/signup.html&quot;, {&quot;error&quot;: &quot;Email already registered&quot;})
+
+        user = CustomUser.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+        )
+        login(request, user)
+        return redirect(&#x27;homepage&#x27;)
+
+    return render(request, &quot;accounts/signup.html&quot;)
+
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect(&#x27;homepage&#x27;)
+
+    if request.method == &quot;POST&quot;:
+        identifier = request.POST.get(&quot;username&quot;, &quot;&quot;).strip()
+        password = request.POST.get(&quot;password&quot;, &quot;&quot;)
+
+        user = authenticate(request, username=identifier, password=password)
+        if user is None:
+            try:
+                matched = CustomUser.objects.get(email=identifier)
+                user = authenticate(request, username=matched.username, password=password)
+            except CustomUser.DoesNotExist:
+                pass
+
+        if user is not None:
+            login(request, user)
+            next_url = request.POST.get(&#x27;next&#x27;) or request.GET.get(&#x27;next&#x27;) or &#x27;homepage&#x27;
+            return redirect(next_url)
+
+        return render(request, &quot;accounts/login.html&quot;, {&quot;error&quot;: &quot;Invalid username/email or password&quot;})
+
+    return render(request, &quot;accounts/login.html&quot;, {&quot;next&quot;: request.GET.get(&#x27;next&#x27;, &#x27;&#x27;)})
+
+
+def logout_view(request):
+    logout(request)</pre><h4>Sign-up template</h4><pre>{% extends &quot;base.html&quot; %}
+{% load static %}
+
+{% block title %}Sign Up - Recipe Finder{% endblock %}
+
+{% block extra_css %}
+&lt;style&gt;
+  .auth-container {
+    max-width: 480px;
+    margin: 60px auto;
+    padding: 40px;
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border, #2a2a2a);
+    border-radius: 12px;
+  }
+  .auth-container h1 { font-size: 1.6rem; margin-bottom: 4px; }
+  .auth-container h2 { font-size: 1.1rem; color: var(--text-muted, #888); margin-bottom: 6px; font-weight: 400; }
+  .auth-container .subtitle { font-size: 0.85rem; color: var(--text-muted, #888); margin-bottom: 24px; }
+  .auth-container fieldset { border: 1px solid var(--border, #333); border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+  .auth-container legend { padding: 0 8px; font-size: 0.85rem; font-weight: 600; color: var(--gold, #d4af37); }
+  .auth-container label { display: block; margin-bottom: 5px; font-size: 0.88rem; font-weight: 600; }
+  .auth-container input[type=&quot;text&quot;],
+  .auth-container input[type=&quot;email&quot;],
+  .auth-container input[type=&quot;password&quot;] {
+    width: 100%; padding: 9px 12px; margin-bottom: 14px;
+    border: 1px solid var(--border, #333); border-radius: 6px;
+    background: var(--input-bg, #111); color: var(--white, #fff);
+    font-size: 0.93rem; box-sizing: border-box;
+  }
+  .auth-container small { display: block; margin-top: -10px; margin-bottom: 10px; font-size: 0.8rem; }
+  .auth-container button[type=&quot;submit&quot;] {
+    width: 100%; padding: 12px; background: var(--gold, #d4af37);
+    color: #000; border: none; border-radius: 6px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+  }
+  .auth-container button[type=&quot;submit&quot;]:disabled { opacity: 0.5; cursor: not-allowed; }
+  .auth-container .auth-links { margin-top: 20px; text-align: center; font-size: 0.9rem; color: var(--text-muted, #888); }
+  .auth-container .auth-links a { color: var(--gold, #d4af37); }
+  .error-msg { color: #e05555; margin-bottom: 14px; font-size: 0.9rem; }
+&lt;/style&gt;
+{% endblock %}
+
+{% block content %}
+&lt;div class=&quot;auth-container&quot;&gt;
+  &lt;h1&gt;Recipe Finder&lt;/h1&gt;
+  &lt;h2&gt;Create an Account&lt;/h2&gt;
+  &lt;p class=&quot;subtitle&quot;&gt;Fields marked with * are required.&lt;/p&gt;
+
+  &lt;form method=&quot;POST&quot;&gt;
+    {% csrf_token %}
+
+    &lt;fieldset&gt;
+      &lt;legend&gt;Personal Information&lt;/legend&gt;
+      &lt;label for=&quot;firstName&quot;&gt;First Name *&lt;/label&gt;
+      &lt;input type=&quot;text&quot; id=&quot;firstName&quot; name=&quot;firstName&quot; placeholder=&quot;e.g. Sarah&quot; required /&gt;
+
+      &lt;label for=&quot;lastName&quot;&gt;Last Name *&lt;/label&gt;
+      &lt;input type=&quot;text&quot; id=&quot;lastName&quot; name=&quot;lastName&quot; placeholder=&quot;e.g. Smith&quot; required /&gt;
+    &lt;/fieldset&gt;
+</pre></div>
+        </article>
+
+        <article class="project-card featured">
+          <div class="project-topline"><span>Current focus</span><span>ML + fashion</span></div>
+          <div class="fashion-gallery"><img src="assets/images/asap.jpg" alt="A$AP Rocky style reference"><img src="assets/images/rihanna.jpg" alt="Rihanna style reference"></div>
+          <h3>Fashion ML Recommender</h3>
+          <p>A project idea where the user uploads an outfit photo and gets similar items from local Egyptian and Sudanese brands. It connects visual taste, fashion discovery, and machine learning.</p>
+          <div class="tags"><span>Python</span><span>ML</span><span>Fashion Tech</span><span>In progress</span></div>
+          <div class="project-actions"><a class="btn small" href="https://github.com/rahafabdulaziz0/fshn-sync" target="_blank" rel="noopener">GitHub repo</a></div>
+        </article>
+
+        <article class="project-card featured">
+          <div class="project-topline"><span>Team ML project</span><span>KNN from scratch</span></div>
+          <img class="project-image" src="assets/images/knn_accuracy_plot.png" alt="KNN accuracy plot">
+          <h3>KNN Classifier from Scratch</h3>
+          <p>A machine learning project built with a friend. It implements the KNN logic manually, including Euclidean distance, nearest-neighbor selection, majority voting, and accuracy comparison for different k values.</p>
+          <div class="metric-row"><div><strong>150</strong><small>samples</small></div><div><strong>4</strong><small>features</small></div><div><strong>3 & 7</strong><small>best k values</small></div></div>
+          <div class="tags"><span>Python</span><span>NumPy</span><span>scikit-learn data</span><span>Matplotlib</span></div>
+          <div class="project-actions">
+            <a class="btn small" href="assets/projects/knn_implementation_report.pdf" target="_blank">Open report PDF</a>
+            <a class="btn small" href="assets/projects/knn_implementation_report.pdf" download>Download report</a>
+            <a class="btn small" href="assets/projects/knn_notebook_view.html" target="_blank">Open notebook view</a>
+            <a class="btn small" href="assets/projects/knn_classifier_from_scratch.ipynb" download>Download notebook</a>
+            <button class="btn small toggle-btn" data-target="knn-code">View code</button>
+          </div>
+          <div id="knn-code" class="expand-box hidden"><pre>import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_classification
+from collections import Counter
+
+#  1 Generate Your Unique Random Seed
+student_id = &quot;20230730_20230841&quot;
+seed = abs(hash(student_id)) % (2**32)
+# hash: take any value (don&#x27;t accept data_container) as an input then return a random value for this input
+print(f&quot;My random seed is: {seed}&quot;)
+
+# Generate the Dataset
+# Using the fixed specifications from the assignment
+X, y = make_classification(
+    n_samples=150,     # 150 samples (rows)
+    n_features=4,      # 4 features (columns)
+    n_informative=4,   # all features are useful for model
+    n_redundant=0,     # No repeted feature (duplicated feature)
+    n_classes=3,       # 3 categorise or classes to predict (y = 1 or y=2 or y=3)
+    random_state=seed  # to get the same values everytime I run the code without change it
+)
+
+# Split Dat
+# 80% training, 20% testing
+train_size = 120
+test_size = 30 # 150(all samples) - 120(train_size)
+
+# slicing the data into train and test
+X_train, y_train = X[:train_size], y[:train_size]
+X_test, y_test = X[train_size:], y[train_size:]
+
+print(f&quot;Training data shape: {X_train.shape}&quot;)
+print(f&quot;Test data shape: {X_test.shape}&quot;)
+
+class KNNClassifier:
+    def __init__(self):
+        # knn is a &quot;lazy learner&quot; so fit() just stores the data, knn it&#x27;s not ML algorithm
+        pass
+
+    def fit(self, X_train, y_train):
+        self.X_train = X_train
+        self.y_train = y_train
+
+    def _compute_euclidean_distance(self, x1, x2):
+        # Computes the Euclidean distance between two points
+        return np.sqrt(np.sum((x1 - x2)**2))
+
+    def predict(self, X_test, k):
+        # predicts labels for all test samples
+        predictions = [] # to save the predictions in it
+        for test_point in X_test:
+            # Compute Euclidean distances
+            distances = []
+            for train_point in self.X_train:
+                dist = self._compute_euclidean_distance(test_point, train_point)
+                distances.append(dist)
+
+            #  Find the k-nearest neighbors (knn)
+            # Get the indices of the k smallest distances
+            k_nearest_indices = np.argsort(distances)[:k]
+            # sort the values_indices then the save the first k values_indices in k_nearest_indices
+
+            # Get the labels of those neighbors
+            k_nearest_labels = [self.y_train[i] for i in k_nearest_indices]
+            # if k_nearest_indices = [0, 1] and self.y_train = [&#x27;A&#x27;, &#x27;B&#x27;, &#x27;A&#x27;, &#x27;B&#x27;]
+            # then k_nearest_labels = [A,B] cause the indices 0 and 1 represent A and B
+
+            # Use majority voting to predict the label
+            # Counter creates a dict of counts
+            vote_counts = Counter(k_nearest_labels)
+            # most_common(1) gives [(most_common_label, its_count)]
+            most_common_label = vote_counts.most_common(1)[0][0]
+            # most_common(1) return dict of the most common values
+            # [0]: get the first element(key,value). [0]: get the key
+            # so most_common_label = Most common class(label) among closest neighbors
+            predictions.append(most_common_label)
+
+        return np.array(predictions)
+
+# calculate Accuracy for each k
+k_values = [1, 3, 5, 7, 9]
+accuracies = []
+
+# fit
+knn = KNNClassifier()
+knn.fit(X_train, y_train)
+
+# predcit
+for k in k_values:
+    y_pred = knn.predict(X_test, k)
+
+    # accuracy
+    accuracy = np.mean(y_pred == y_test)
+    accuracies.append(accuracy)
+
+    # Expected Output: Printed Accuracies
+    print(f&quot;Accuracy for k={k}: {accuracy:.2f}&quot;) # [cite: 35]
+
+# Visualization (Plot)
+# Expected Output 2 - Line Plot</pre></div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-topline"><span>Software project</span><span>Documentation</span></div>
+          <img class="project-image" src="assets/images/software_use_case.png" alt="Software use case diagram">
+          <h3>Software Project</h3>
+          <p>A standalone software engineering project. The portfolio shows the use-case diagram and provides the documentation archive for the SRS/SAS files.</p>
+          <div class="tags"><span>Software Engineering</span><span>UML</span><span>SRS/SAS</span></div>
+          <div class="project-actions"><a class="btn small" href="assets/images/software_use_case.png" target="_blank">Open diagram</a><a class="btn small" href="assets/projects/software_assignment_archive.rar" download>Download documentation archive</a></div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-topline"><span>Simulation</span><span>Monte Carlo</span></div>
+          <h3>Profit Risk Simulation</h3>
+          <p>A Monte Carlo model for estimating expected profit and risk using repeated random trials.</p>
+          <div class="tags"><span>Python</span><span>NumPy</span><span>Matplotlib</span></div>
+          <div class="project-actions"><a class="btn small" href="assets/projects/monte_carlo_profit_simulation.py" target="_blank">Open code</a><a class="btn small" href="assets/projects/monte_carlo_profit_simulation.py" download>Download code</a><a class="btn small" href="assets/projects/modeling_simulation_report.docx" download>Download report</a><button class="btn small toggle-btn" data-target="monte-code">View code</button></div>
+          <div id="monte-code" class="expand-box hidden"><pre>#Task 1 
+import numpy as np
+import random
+import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter, MultipleLocator
+
+PRICE1 = 300
+PRICE2 = 200
+FIXED_COST = 2_000_000
+N_TRIALS = 100
+
+C1_MEAN, C2_MEAN, C3_MEAN = 67, 85, 30
+X1_MEAN, X2_MEAN = 1700, 1000
+C1_SD, C2_SD, C3_SD = 5, 5, 3
+X1_SD, X2_SD = 200, 150
+
+profits = []
+
+for i in range(N_TRIALS):
+    C1 = random.gauss(C1_MEAN, C1_SD)
+    C2 = random.gauss(C2_MEAN, C2_SD)
+    C3 = random.gauss(C3_MEAN, C3_SD)
+    X1 = random.gauss(X1_MEAN, X1_SD)
+    X2 = random.gauss(X2_MEAN, X2_SD)
+    profit = (PRICE1 + PRICE2 - C1 - C2 - C3) * X1 * X2 - FIXED_COST
+    profits.append(profit)
+    print(f&quot;Trial {i+1:03d}: C1={C1:.2f}, C2={C2:.2f}, C3={C3:.2f}, X1={X1:.2f}, X2={X2:.2f}, Profit={profit:,.2f} $&quot;)
+
+profits = np.array(profits)
+mean_profit = np.mean(profits)
+variance = np.var(profits)
+std_dev = np.std(profits)
+conf_low = mean_profit - 1.96 * std_dev / np.sqrt(N_TRIALS)
+conf_high = mean_profit + 1.96 * std_dev / np.sqrt(N_TRIALS)
+loss_prob = np.sum(profits &lt; 0) / N_TRIALS
+
+print(&quot;\n===== TASK 1: Monte Carlo Risk Analysis =====&quot;)
+print(f&quot;Expected Profit (Mean): {mean_profit:,.2f} $&quot;)
+print(f&quot;Variance: {variance:,.2f}&quot;)
+print(f&quot;Std Deviation: {std_dev:,.2f} $&quot;)
+print(f&quot;95% Confidence Interval: ({conf_low:,.2f} $, {conf_high:,.2f} $)&quot;)
+print(f&quot;Probability of Loss: {loss_prob*100:.2f} %&quot;)
+
+def millions(x, pos):
+    return f&#x27;${x*1e-6:.1f}M&#x27;
+
+plt.figure(facecolor=&#x27;white&#x27;)
+plt.hist(profits, bins=25, color=&#x27;skyblue&#x27;, edgecolor=&#x27;black&#x27;, alpha=0.8)
+plt.axvline(mean_profit, color=&#x27;red&#x27;, linestyle=&#x27;--&#x27;, linewidth=2, label=f&quot;Mean Profit: ${mean_profit:,.0f}&quot;)
+plt.axvline(0, color=&#x27;black&#x27;, linestyle=&#x27;-&#x27;, linewidth=1.5, label=&#x27;Break-even ($0)&#x27;)
+plt.title(&quot;Distribution of Simulated Profit Outcomes&quot;)
+plt.xlabel(&quot;Profit ($)&quot;)
+plt.ylabel(&quot;Frequency (Number of Trials)&quot;)
+plt.legend()
+plt.grid(axis=&#x27;y&#x27;, linestyle=&#x27;--&#x27;, alpha=0.6)
+
+ax = plt.gca()
+ax.xaxis.set_major_formatter(FuncFormatter(millions))
+ax.xaxis.set_major_locator(MultipleLocator(100_000_000))  # فاصل 100 مليون بين الأرقام
+plt.xticks(rotation=45, ha=&#x27;right&#x27;)  # يخليهم مائلين شوية ومرتبين
+
+plt.tight_layout()
+plt.show()</pre></div>
+        </article>
+
+        <article class="project-card wide">
+          <div class="project-topline"><span>Simulation</span><span>Queue system</span></div>
+          <h3>Double Server Queue Simulation</h3>
+          <p>A call-center style simulation with two servers, measuring waiting time, probability of waiting, idle time, and total time in system across 100 trials.</p>
+          <div class="mini-gallery"><img src="assets/images/queue_wait_hist.png" alt="Average waiting time histogram"><img src="assets/images/queue_prob_hist.png" alt="Probability of waiting histogram"></div>
+          <div class="tags"><span>Python</span><span>Queueing</span><span>CSV analysis</span></div>
+          <div class="project-actions"><a class="btn small" href="assets/projects/double_server_queue_simulation.py" target="_blank">Open code</a><a class="btn small" href="assets/projects/double_server_queue_simulation.py" download>Download code</a><a class="btn small" href="assets/data/task2_trials_stats.csv" target="_blank">Open CSV</a><a class="btn small" href="assets/data/task2_trials_stats.csv" download>Download CSV</a><button class="btn small toggle-btn" data-target="queue-code">View code</button></div>
+          <div id="queue-code" class="expand-box hidden"><pre># TASK 2  
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+
+MEAN_INTERARRIVAL = 4.0
+MEAN_SERVICE_ABL = 3.0
+MEAN_SERVICE_BAK = 0.9
+N_CUSTOMERS = 700
+N_TRIALS = 100
+
+def simulate_double_server():
+    clock = 0.0
+    next_arrival = random.expovariate(1 / MEAN_INTERARRIVAL)
+    service_end_able = float(&#x27;inf&#x27;)
+    service_end_bak = float(&#x27;inf&#x27;)
+    waiting_times, service_times, time_in_system = [], [], []
+    idle_time, last_event_time = 0.0, 0.0
+    queue = []
+
+    while len(waiting_times) &lt; N_CUSTOMERS:
+        next_event = min(next_arrival, service_end_able, service_end_bak)
+        clock = next_event
+        if service_end_able == float(&#x27;inf&#x27;) and service_end_bak == float(&#x27;inf&#x27;):
+            idle_time += clock - last_event_time
+        last_event_time = clock
+
+        if next_event == next_arrival:
+            queue.append(clock)
+            next_arrival = clock + random.expovariate(1 / MEAN_INTERARRIVAL)
+            if service_end_able == float(&#x27;inf&#x27;):
+                start = queue.pop(0)
+                service_time = random.expovariate(1 / MEAN_SERVICE_ABL)
+                service_end_able = clock + service_time
+                waiting_times.append(clock - start)
+                service_times.append(service_time)
+                time_in_system.append(service_time + (clock - start))
+            elif service_end_bak == float(&#x27;inf&#x27;):
+                start = queue.pop(0)
+                service_time = random.expovariate(1 / MEAN_SERVICE_BAK)
+                service_end_bak = clock + service_time
+                waiting_times.append(clock - start)
+                service_times.append(service_time)
+                time_in_system.append(service_time + (clock - start))
+
+        elif next_event == service_end_able:
+            if queue:
+                start = queue.pop(0)
+                service_time = random.expovariate(1 / MEAN_SERVICE_ABL)
+                service_end_able = clock + service_time
+                waiting_times.append(clock - start)
+                service_times.append(service_time)
+                time_in_system.append(service_time + (clock - start))
+            else:
+                service_end_able = float(&#x27;inf&#x27;)
+
+        else:
+            if queue:
+                start = queue.pop(0)
+                service_time = random.expovariate(1 / MEAN_SERVICE_BAK)
+                service_end_bak = clock + service_time
+                waiting_times.append(clock - start)
+                service_times.append(service_time)
+                time_in_system.append(service_time + (clock - start))
+            else:
+                service_end_bak = float(&#x27;inf&#x27;)
+
+    avg_wait = np.mean(waiting_times)
+    prob_wait = np.sum(np.array(waiting_times) &gt; 0) / len(waiting_times)
+    prob_idle = idle_time / clock
+    avg_service = np.mean(service_times)
+    avg_arrival = MEAN_INTERARRIVAL
+    avg_wait_for_waiters = np.mean([w for w in waiting_times if w &gt; 0]) if prob_wait &gt; 0 else 0
+    avg_system = np.mean(time_in_system)
+
+    return avg_wait, prob_wait, prob_idle, avg_service, avg_arrival, avg_wait_for_waiters, avg_system
+
+results = [simulate_double_server() for _ in range(N_TRIALS)]
+avg_results = np.mean(results, axis=0)
+</pre></div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-topline"><span>Data structures</span><span>C++</span></div>
+          <h3>Task Manager with BST & Min Heap</h3>
+          <p>A task system that uses a Binary Search Tree and Min Heap to organise and prioritise tasks.</p>
+          <div class="tags"><span>C++</span><span>BST</span><span>Heap</span></div>
+          <div class="project-actions"><a class="btn small" href="assets/projects/task_manager_src/main.cpp" target="_blank">Open main.cpp</a><a class="btn small" href="assets/projects/task_manager_src/BST.h" target="_blank">Open BST.h</a><a class="btn small" href="assets/projects/task_manager_src/heap.h" target="_blank">Open heap.h</a><a class="btn small" href="assets/projects/task_manager_bst_heap.zip" download>Download ZIP</a><button class="btn small toggle-btn" data-target="task-code">View code</button></div>
+          <div id="task-code" class="expand-box hidden"><pre>
+#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+#include &lt;limits&gt;
+#include &quot;BST.h&quot;
+#include &quot;heap.h&quot;
+using namespace std;
+int main(){
+    BST bst;
+    cout&lt;&lt;&quot;Enter input file name: &quot;;
+    string f; getline(cin,f);
+    ifstream in(f);
+    int n; in&gt;&gt;n; in.ignore();
+    for(int i=0;i&lt;n;i++){
+        string d,c; int m;
+        getline(in,d); in&gt;&gt;m; in.ignore(); getline(in,c);
+        bst.insertTask(Task(d,m,c));
+    }
+    bst.displayAll();
+    return 0;
+}</pre></div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-topline"><span>Problem solving</span><span>C++</span></div>
+          <h3>Stack Calculator</h3>
+          <p>A basic expression calculator that uses stack logic to handle signs and parentheses.</p>
+          <div class="tags"><span>C++</span><span>Stack</span><span>Parsing</span></div>
+          <div class="project-actions"><a class="btn small" href="assets/projects/basic_calculator_stack.cpp" target="_blank">Open code</a><a class="btn small" href="assets/projects/basic_calculator_stack.cpp" download>Download code</a><button class="btn small toggle-btn" data-target="calc-code">View code</button></div>
+          <div id="calc-code" class="expand-box hidden"><pre>#include &lt;iostream&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int calculate(string s) {
+    stack&lt;int&gt; st;
+
+    int result = 0;
+    int number = 0;
+    int sign = 1;
+
+    for (int i = 0; i &lt; s.length(); i++) {
+        char ch = s[i];
+
+        if (ch &gt;= &#x27;0&#x27; &amp;&amp; ch &lt;= &#x27;9&#x27;) {
+            number = 0;
+
+            while (i &lt; s.length() &amp;&amp; s[i] &gt;= &#x27;0&#x27; &amp;&amp; s[i] &lt;= &#x27;9&#x27;) {
+                number = number * 10 + (s[i] - &#x27;0&#x27;);
+                i++;
+            }
+
+            result += sign * number;
+            i--;
+        }
+        else if (ch == &#x27;+&#x27;) {
+            sign = 1;
+        }
+        else if (ch == &#x27;-&#x27;) {
+            sign = -1;
+        }
+        else if (ch == &#x27;(&#x27;) {
+            st.push(result);
+            st.push(sign);
+
+            result = 0;
+            sign = 1;
+        }
+        else if (ch == &#x27;)&#x27;) {
+            int oldSign = st.top();
+            st.pop();
+
+            int oldResult = st.top();
+            st.pop();
+
+            result = oldResult + oldSign * result;
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    string s;
+
+    cout &lt;&lt; &quot;Enter expression: &quot;;
+    getline(cin, s);
+
+    cout &lt;&lt; &quot;Result = &quot; &lt;&lt; calculate(s) &lt;&lt; endl;
+
+    return 0;
+}</pre></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="section reveal">
+      <div class="contact-card">
+        <div><p class="eyebrow">Contact</p><h2>Let’s connect</h2><p>Find me on GitHub and LinkedIn.</p></div>
+        <div class="contact-links"><a class="btn" href="https://github.com/rahafabdulaziz0" target="_blank" rel="noopener">GitHub</a><a class="btn" href="https://www.linkedin.com/in/rahaf-abdulaziz-jafar-0139862ab/" target="_blank" rel="noopener">LinkedIn</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><p>Built by Rahaf Abdelaziz.</p></footer>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sign Up - Recipe Finder{% endblock %}
+
+{% block extra_css %}
+<style>
+  .auth-container {
+    max-width: 480px;
+    margin: 60px auto;
+    padding: 40px;
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border, #2a2a2a);
+    border-radius: 12px;
+  }
+  .auth-container h1 { font-size: 1.6rem; margin-bottom: 4px; }
+  .auth-container h2 { font-size: 1.1rem; color: var(--text-muted, #888); margin-bottom: 6px; font-weight: 400; }
+  .auth-container .subtitle { font-size: 0.85rem; color: var(--text-muted, #888); margin-bottom: 24px; }
+  .auth-container fieldset { border: 1px solid var(--border, #333); border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; }
+  .auth-container legend { padding: 0 8px; font-size: 0.85rem; font-weight: 600; color: var(--gold, #d4af37); }
+  .auth-container label { display: block; margin-bottom: 5px; font-size: 0.88rem; font-weight: 600; }
+  .auth-container input[type="text"],
+  .auth-container input[type="email"],
+  .auth-container input[type="password"] {
+    width: 100%; padding: 9px 12px; margin-bottom: 14px;
+    border: 1px solid var(--border, #333); border-radius: 6px;
+    background: var(--input-bg, #111); color: var(--white, #fff);
+    font-size: 0.93rem; box-sizing: border-box;
+  }
+  .auth-container small { display: block; margin-top: -10px; margin-bottom: 10px; font-size: 0.8rem; }
+  .auth-container button[type="submit"] {
+    width: 100%; padding: 12px; background: var(--gold, #d4af37);
+    color: #000; border: none; border-radius: 6px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+  }
+  .auth-container button[type="submit"]:disabled { opacity: 0.5; cursor: not-allowed; }
+  .auth-container .auth-links { margin-top: 20px; text-align: center; font-size: 0.9rem; color: var(--text-muted, #888); }
+  .auth-container .auth-links a { color: var(--gold, #d4af37); }
+  .error-msg { color: #e05555; margin-bottom: 14px; font-size: 0.9rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <h1>Recipe Finder</h1>
+  <h2>Create an Account</h2>
+  <p class="subtitle">Fields marked with * are required.</p>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <fieldset>
+      <legend>Personal Information</legend>
+      <label for="firstName">First Name *</label>
+      <input type="text" id="firstName" name="firstName" placeholder="e.g. Sarah" required />
+
+      <label for="lastName">Last Name *</label>
+      <input type="text" id="lastName" name="lastName" placeholder="e.g. Smith" required />
+    </fieldset>
+
+    <fieldset>
+      <legend>Account Details</legend>
+      <label for="username">Username *</label>
+      <input type="text" id="username" name="username" placeholder="e.g. sarahcooks" required />
+      <small id="usernameMsg" style="color: #e05555;"></small>
+
+      <label for="email">Email Address *</label>
+      <input type="email" id="email" name="email" placeholder="e.g. sarah@gmail.com" required />
+      <small id="emailMsg" style="color: #e05555;"></small>
+
+      <label for="password">Password *</label>
+      <input type="password" id="password" name="password" placeholder="At least 8 characters" minlength="8" required />
+
+      <label for="confirmPassword">Confirm Password *</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat your password" required />
+    </fieldset>
+
+    {% if error %}
+      <p class="error-msg">{{ error }}</p>
+    {% endif %}
+
+    <button type="submit">Create Account</button>
+  </form>
+
+  <div class="auth-links">
+    <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js_body %}
+<script>
+  let usernameTaken = false;
+  let emailTaken = false;
+  const submitBtn = document.querySelector('button[type="submit"]');
+
+  function updateSubmit() {
+    submitBtn.disabled = usernameTaken || emailTaken;
+  }
+
+  document.getElementById('username').addEventListener('blur', async function () {
+    const val = this.value.trim();
+    if (!val) return;
+    const res = await fetch(`/accounts/check-username/?username=${encodeURIComponent(val)}`);
+    const data = await res.json();
+    usernameTaken = data.taken;
+    document.getElementById('usernameMsg').textContent = data.taken ? 'Username already taken' : '';
+    updateSubmit();
+  });
+
+  document.getElementById('email').addEventListener('blur', async function () {
+    const val = this.value.trim();
+    if (!val) return;
+    const res = await fetch(`/accounts/check-email/?email=${encodeURIComponent(val)}`);
+    const data = await res.json();
+    emailTaken = data.taken;
+    document.getElementById('emailMsg').textContent = data.taken ? 'Email already registered' : '';
+    updateSubmit();
+  });
+</script>
+{% endblock %}

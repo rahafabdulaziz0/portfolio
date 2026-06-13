@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login - Recipe Finder{% endblock %}
+
+{% block extra_css %}
+<style>
+  .auth-container {
+    max-width: 420px;
+    margin: 60px auto;
+    padding: 40px;
+    background: var(--card-bg, #1a1a1a);
+    border: 1px solid var(--border, #2a2a2a);
+    border-radius: 12px;
+  }
+  .auth-container h1 { font-size: 1.6rem; margin-bottom: 4px; }
+  .auth-container h2 { font-size: 1.1rem; color: var(--text-muted, #888); margin-bottom: 24px; font-weight: 400; }
+  .auth-container label { display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 600; }
+  .auth-container input[type="text"],
+  .auth-container input[type="password"] {
+    width: 100%; padding: 10px 12px; margin-bottom: 18px;
+    border: 1px solid var(--border, #333); border-radius: 6px;
+    background: var(--input-bg, #111); color: var(--white, #fff);
+    font-size: 0.95rem; box-sizing: border-box;
+  }
+  .auth-container input[type="submit"],
+  .auth-container .btn-submit {
+    width: 100%; padding: 12px; background: var(--gold, #d4af37);
+    color: #000; border: none; border-radius: 6px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+  }
+  .auth-container .auth-links { margin-top: 20px; text-align: center; font-size: 0.9rem; color: var(--text-muted, #888); }
+  .auth-container .auth-links a { color: var(--gold, #d4af37); }
+  .error-msg { color: #e05555; margin-bottom: 14px; font-size: 0.9rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <h1>Welcome Back</h1>
+  <h2>Sign in to your account</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+
+    <label for="username">Username or Email</label>
+    <input type="text" id="username" name="username" placeholder="e.g. sarahcooks" required autofocus />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="Your password" required />
+
+    {% if error %}
+      <p class="error-msg">{{ error }}</p>
+    {% endif %}
+
+    <input type="submit" value="Login" />
+  </form>
+
+  <div class="auth-links">
+    <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+  </div>
+</div>
+{% endblock %}

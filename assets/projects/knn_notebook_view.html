@@ -1,0 +1,106 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KNN Notebook View</title><style>body{background:#080808;color:#f8eeee;font-family:Arial,Helvetica,sans-serif;margin:0;padding:32px}h1{font-family:Impact,Haettenschweiler,'Arial Narrow Bold',sans-serif;color:#d91414;font-size:3rem}h2{color:#ff6060}pre{background:#111;border:1px solid #333;border-radius:16px;padding:18px;overflow:auto;line-height:1.45}code{font-family:Consolas,monospace;color:#ffe1e1}</style></head><body><h1>KNN Classifier Notebook</h1><p>Rendered code view for browser preview.</p><h2>Cell 1</h2><pre><code>import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_classification
+from collections import Counter
+
+#  1 Generate Your Unique Random Seed
+student_id = &quot;20230730_20230841&quot;
+seed = abs(hash(student_id)) % (2**32)
+# hash: take any value (don&#x27;t accept data_container) as an input then return a random value for this input
+print(f&quot;My random seed is: {seed}&quot;)
+
+# Generate the Dataset
+# Using the fixed specifications from the assignment
+X, y = make_classification(
+    n_samples=150,     # 150 samples (rows)
+    n_features=4,      # 4 features (columns)
+    n_informative=4,   # all features are useful for model
+    n_redundant=0,     # No repeted feature (duplicated feature)
+    n_classes=3,       # 3 categorise or classes to predict (y = 1 or y=2 or y=3)
+    random_state=seed  # to get the same values everytime I run the code without change it
+)
+
+# Split Dat
+# 80% training, 20% testing
+train_size = 120
+test_size = 30 # 150(all samples) - 120(train_size)
+
+# slicing the data into train and test
+X_train, y_train = X[:train_size], y[:train_size]
+X_test, y_test = X[train_size:], y[train_size:]
+
+print(f&quot;Training data shape: {X_train.shape}&quot;)
+print(f&quot;Test data shape: {X_test.shape}&quot;)</code></pre><h2>Cell 2</h2><pre><code>class KNNClassifier:
+    def __init__(self):
+        # knn is a &quot;lazy learner&quot; so fit() just stores the data, knn it&#x27;s not ML algorithm
+        pass
+
+    def fit(self, X_train, y_train):
+        self.X_train = X_train
+        self.y_train = y_train
+
+    def _compute_euclidean_distance(self, x1, x2):
+        # Computes the Euclidean distance between two points
+        return np.sqrt(np.sum((x1 - x2)**2))
+
+    def predict(self, X_test, k):
+        # predicts labels for all test samples
+        predictions = [] # to save the predictions in it
+        for test_point in X_test:
+            # Compute Euclidean distances
+            distances = []
+            for train_point in self.X_train:
+                dist = self._compute_euclidean_distance(test_point, train_point)
+                distances.append(dist)
+
+            #  Find the k-nearest neighbors (knn)
+            # Get the indices of the k smallest distances
+            k_nearest_indices = np.argsort(distances)[:k]
+            # sort the values_indices then the save the first k values_indices in k_nearest_indices
+
+            # Get the labels of those neighbors
+            k_nearest_labels = [self.y_train[i] for i in k_nearest_indices]
+            # if k_nearest_indices = [0, 1] and self.y_train = [&#x27;A&#x27;, &#x27;B&#x27;, &#x27;A&#x27;, &#x27;B&#x27;]
+            # then k_nearest_labels = [A,B] cause the indices 0 and 1 represent A and B
+
+            # Use majority voting to predict the label
+            # Counter creates a dict of counts
+            vote_counts = Counter(k_nearest_labels)
+            # most_common(1) gives [(most_common_label, its_count)]
+            most_common_label = vote_counts.most_common(1)[0][0]
+            # most_common(1) return dict of the most common values
+            # [0]: get the first element(key,value). [0]: get the key
+            # so most_common_label = Most common class(label) among closest neighbors
+            predictions.append(most_common_label)
+
+        return np.array(predictions)</code></pre><h2>Cell 3</h2><pre><code># calculate Accuracy for each k
+k_values = [1, 3, 5, 7, 9]
+accuracies = []
+
+# fit
+knn = KNNClassifier()
+knn.fit(X_train, y_train)
+
+# predcit
+for k in k_values:
+    y_pred = knn.predict(X_test, k)
+
+    # accuracy
+    accuracy = np.mean(y_pred == y_test)
+    accuracies.append(accuracy)
+
+    # Expected Output: Printed Accuracies
+    print(f&quot;Accuracy for k={k}: {accuracy:.2f}&quot;) # [cite: 35]
+
+# Visualization (Plot)
+# Expected Output 2 - Line Plot
+plt.figure(figsize=(10, 6))
+plt.plot(k_values, accuracies, marker=&#x27;o&#x27;, linestyle=&#x27;--&#x27;)
+
+# Add title and labels
+plt.title(&quot;kNN Testing Accuracy vs. k&quot;)
+plt.xlabel(&quot;k (Number of Neighbors)&quot;)
+plt.ylabel(&quot;Testing Accuracy&quot;)
+plt.xticks(k_values)
+plt.grid(True)
+plt.show()</code></pre></body></html>
