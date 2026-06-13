@@ -1,4 +1,8 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KNN Notebook View</title><style>body{background:#080808;color:#f8eeee;font-family:Arial,Helvetica,sans-serif;margin:0;padding:32px}h1{font-family:Impact,Haettenschweiler,'Arial Narrow Bold',sans-serif;color:#d91414;font-size:3rem}h2{color:#ff6060}pre{background:#111;border:1px solid #333;border-radius:16px;padding:18px;overflow:auto;line-height:1.45}code{font-family:Consolas,monospace;color:#ffe1e1}</style></head><body><h1>KNN Classifier Notebook</h1><p>Rendered code view for browser preview.</p><h2>Cell 1</h2><pre><code>import numpy as np
+<!doctype html><html><head><meta charset='utf-8'><title>KNN Notebook View</title>
+<style>body{font-family:Arial, sans-serif;background:#080808;color:#f7eeee;margin:0;padding:32px}h1{color:#e01616}.cell{border:1px solid #333;border-radius:18px;padding:20px;margin:18px 0;background:#121212}pre{white-space:pre-wrap;word-break:break-word;line-height:1.5;color:#ffecec}a{color:#ff6a6a}</style></head><body>
+<h1>KNN Classifier from Scratch — Notebook View</h1>
+<p>This is a readable HTML preview of the submitted notebook.</p>
+<section class='cell'><h2>Code cell 1</h2><pre><code>import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_classification
 from collections import Counter
@@ -30,7 +34,7 @@ X_train, y_train = X[:train_size], y[:train_size]
 X_test, y_test = X[train_size:], y[train_size:]
 
 print(f&quot;Training data shape: {X_train.shape}&quot;)
-print(f&quot;Test data shape: {X_test.shape}&quot;)</code></pre><h2>Cell 2</h2><pre><code>class KNNClassifier:
+print(f&quot;Test data shape: {X_test.shape}&quot;)</code></pre></section><section class='cell'><h2>Code cell 2</h2><pre><code>class KNNClassifier:
     def __init__(self):
         # knn is a &quot;lazy learner&quot; so fit() just stores the data, knn it&#x27;s not ML algorithm
         pass
@@ -73,7 +77,7 @@ print(f&quot;Test data shape: {X_test.shape}&quot;)</code></pre><h2>Cell 2</h2><
             # so most_common_label = Most common class(label) among closest neighbors
             predictions.append(most_common_label)
 
-        return np.array(predictions)</code></pre><h2>Cell 3</h2><pre><code># calculate Accuracy for each k
+        return np.array(predictions)</code></pre></section><section class='cell'><h2>Code cell 3</h2><pre><code># calculate Accuracy for each k
 k_values = [1, 3, 5, 7, 9]
 accuracies = []
 
@@ -103,4 +107,5 @@ plt.xlabel(&quot;k (Number of Neighbors)&quot;)
 plt.ylabel(&quot;Testing Accuracy&quot;)
 plt.xticks(k_values)
 plt.grid(True)
-plt.show()</code></pre></body></html>
+plt.show()</code></pre></section>
+</body></html>

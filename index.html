@@ -29,26 +29,26 @@
           <a class="btn" href="https://github.com/rahafabdulaziz0" target="_blank" rel="noopener">GitHub</a>
           <a class="btn" href="https://www.linkedin.com/in/rahaf-abdulaziz-jafar-0139862ab/" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-        <blockquote class="lyric-quote">
-          <p>“Create, explore, expand, conquer.”</p>
-          <cite>- A$AP Rocky</cite>
-        </blockquote>
       </div>
       <div class="hero-visuals">
         <figure class="hero-image main"><img src="assets/images/hero_main.png" alt="Rahaf sitting outdoors wearing a white scarf"></figure>
-        <figure class="hero-image second"><img src="assets/images/hero_secondary.png" alt="Rahaf holding flowers"></figure>
       </div>
     </section>
 
     <section id="about" class="section reveal">
       <div class="section-heading">
         <p class="eyebrow">About</p>
-        <h2>Creative mind, structured thinking.</h2>
+        <h2>Creative mind, structured execution.</h2>
       </div>
       <div class="about-grid">
         <article class="about-card">
           <p>I’m Rahaf Abdelaziz, a Computer Science student at Cairo University, specialising in Decision Support and Operations Research. I’m interested in machine learning, data, and building practical projects that connect technical ideas with real life.</p>
           <p>I’m also a creative person - I paint, sketch, and care about visual style - but I’m equally passionate about math, statistics, and machine learning. For me, this is the best of both worlds: creativity and logic. My main focus right now is combining both passions into projects that feel useful, personal, and original.</p>
+        
+          <blockquote class="about-quote">
+            <p>“Create, explore, expand, conquer.”</p>
+            <cite>- A$AP Rocky</cite>
+          </blockquote>
         </article>
         <article class="about-photo">
           <img src="assets/images/hero_secondary.png" alt="Rahaf holding flowers">
@@ -67,13 +67,14 @@
       <div class="projects-grid">
         <article class="project-card featured">
           <div class="project-topline"><span>Team web project</span><span>Django</span></div>
-          <img class="project-image" src="assets/images/recipe_preview.jpg" alt="Recipe Finder preview">
+          <img class="project-image" src="assets/images/recipe_project_food.jpg" alt="Recipe Finder food preview">
           <h3>Recipe Finder Web Project</h3>
           <p>A team web project for discovering, searching, saving, and managing recipes. My part was building the login and sign-up flow on both the frontend and backend using HTML, CSS, JavaScript, and Django.</p>
           <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Django</span><span>Teamwork</span></div>
           <div class="project-actions">
             <a class="btn small" href="assets/projects/recipe_finder_preview/index.html" target="_blank">Open website preview</a>
             <a class="btn small" href="https://github.com/Asmaa6777/WEB" target="_blank" rel="noopener">GitHub repo</a>
+            <a class="btn small" href="http://127.0.0.1:8000" target="_blank" rel="noopener">Local Django URL</a>
             <a class="btn small" href="assets/projects/recipe_finder_web_project.zip" download>Download source ZIP</a>
             <button class="btn small toggle-btn" data-target="recipe-code">View login/sign-up code</button>
           </div>
@@ -336,24 +337,41 @@ for k in k_values:
     print(f&quot;Accuracy for k={k}: {accuracy:.2f}&quot;) # [cite: 35]
 
 # Visualization (Plot)
-# Expected Output 2 - Line Plot</pre></div>
+# Expected Output 2 - Line Plot
+plt.figure(figsize=(10, 6))
+plt.plot(k_values, accuracies, marker=&#x27;o&#x27;, linestyle=&#x27;--&#x27;)
+
+# Add title and labels
+plt.title(&quot;kNN Testing Accuracy vs. k&quot;)
+plt.xlabel(&quot;k (Number of Neighbors)&quot;)
+plt.ylabel(&quot;Testing Accuracy&quot;)
+plt.xticks(k_values)
+plt.grid(True)
+plt.show()</pre></div>
         </article>
 
         <article class="project-card">
           <div class="project-topline"><span>Software project</span><span>Documentation</span></div>
           <img class="project-image" src="assets/images/software_use_case.png" alt="Software use case diagram">
           <h3>Software Project</h3>
-          <p>A standalone software engineering project. The portfolio shows the use-case diagram and provides the documentation archive for the SRS/SAS files.</p>
+          <p>A standalone software engineering project. The portfolio shows the use-case diagram as an openable PDF and keeps the original submitted documentation archive available for download.</p>
           <div class="tags"><span>Software Engineering</span><span>UML</span><span>SRS/SAS</span></div>
-          <div class="project-actions"><a class="btn small" href="assets/images/software_use_case.png" target="_blank">Open diagram</a><a class="btn small" href="assets/projects/software_assignment_archive.rar" download>Download documentation archive</a></div>
+          <div class="project-actions">
+            <a class="btn small" href="assets/images/software_use_case.png" target="_blank">Open diagram image</a>
+            <a class="btn small" href="assets/projects/Software_Diagram.pdf" target="_blank">Open Software Diagram PDF</a>
+            <a class="btn small" href="assets/projects/Software_Diagram.pdf" download>Download Software Diagram PDF</a>
+            <a class="btn small" href="assets/projects/Software_Diagram_Files.zip" download>Download Software Diagram files</a>
+            <a class="btn small" href="assets/projects/Software_Assignment_Archive.rar" download>Download original archive</a>
+          </div>
         </article>
 
         <article class="project-card">
           <div class="project-topline"><span>Simulation</span><span>Monte Carlo</span></div>
+          <img class="project-image" src="assets/images/monte_carlo_profit_output.png" alt="Monte Carlo profit simulation output chart">
           <h3>Profit Risk Simulation</h3>
           <p>A Monte Carlo model for estimating expected profit and risk using repeated random trials.</p>
           <div class="tags"><span>Python</span><span>NumPy</span><span>Matplotlib</span></div>
-          <div class="project-actions"><a class="btn small" href="assets/projects/monte_carlo_profit_simulation.py" target="_blank">Open code</a><a class="btn small" href="assets/projects/monte_carlo_profit_simulation.py" download>Download code</a><a class="btn small" href="assets/projects/modeling_simulation_report.docx" download>Download report</a><button class="btn small toggle-btn" data-target="monte-code">View code</button></div>
+          <div class="project-actions"><a class="btn small" href="assets/projects/monte_carlo_profit_simulation.py" target="_blank">Open code</a><a class="btn small" href="assets/projects/monte_carlo_profit_simulation.py" download>Download code</a><a class="btn small" href="assets/projects/modeling_simulation_report.docx" target="_blank">Open report</a><a class="btn small" href="assets/projects/modeling_simulation_report.docx" download>Download report</a><button class="btn small toggle-btn" data-target="monte-code">View code</button></div>
           <div id="monte-code" class="expand-box hidden"><pre>#Task 1 
 import numpy as np
 import random
