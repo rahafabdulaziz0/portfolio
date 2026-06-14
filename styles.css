@@ -5,3 +5,4 @@
 .about-quote{margin:28px 0 0;text-align:center;color:#fff;border-top:1px solid var(--line);padding-top:22px}.about-quote p{margin:0 0 8px;font-size:1.18rem;font-weight:900;color:#fff}.about-quote cite{font-style:normal;color:#fff;opacity:.82}
 
 .project-card .project-image{object-position:center}
+.reveal{opacity:1!important;transform:none!important}
